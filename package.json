@@ -1,5 +1,5 @@
 {
-  "name": "2",
+  "name": "api-for-covid-daily",
   "version": "1.0.0",
   "description": "API for Covid Daily",
   "main": "app.js",
@@ -11,7 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "cheerio": "^1.0.0-rc.3",
+    "cheerio-tableparser": "^1.0.1",
+    "express": "^4.17.1",
+    "moment": "^2.25.3",
+    "node-fetch": "^2.6.0"
   },
   "engines": {
     "node": "12.16.3"
