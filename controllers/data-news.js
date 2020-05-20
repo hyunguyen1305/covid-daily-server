@@ -128,7 +128,7 @@ const extract = ($) => {
     newCases: cases.newCases,
     deathCase: cases.deathCases,
     nation: nation.name,
-    countryCode: nation.countryCode,
+    nationCode: nation.nationCode,
     sourceList: sourceTemp,
   };
 };
