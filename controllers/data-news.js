@@ -44,11 +44,13 @@ const extractDataTable = ($) => {
     true,
     true
   );
-  const ynewCase = yData[3].slice(8, yData[3].length - 8);
-  const ytotalCases = yData[2].slice(8, yData[2].length - 8);
-  const ynewDeath = yData[5].slice(8, yData[5].length - 8);
-  const ytotalDeaths = yData[4].slice(8, yData[4].length - 8);
+  const ynation = yData[1].slice(8, yData[1].length);
+  const ynewCase = yData[3].slice(8, yData[3].length);
+  const ytotalCases = yData[2].slice(8, yData[2].length);
+  const ynewDeath = yData[5].slice(8, yData[5].length);
+  const ytotalDeaths = yData[4].slice(8, yData[4].length);
   let mydata = [];
+  let ymydata = [];
   nation.map((ele, index) => {
     let nationCode = null;
     nationCode = getNationCode(ele);
@@ -60,11 +62,25 @@ const extractDataTable = ($) => {
       totalDeaths: parseInt(totalDeaths[index].replace(/,/g, "")),
       newDeath: parseInt(newDeath[index].replace(/,/g, "")),
       totalRecovered: parseInt(totalRecovered[index].replace(/,/g, "")),
+      remainingCases: parseInt(remainingCases[index].replace(/,/g, "")),
+    });
+  });
+  ynation.map((ele, index) => {
+    ymydata.push({
+      nationName: ele,
       ynewCase: parseInt(ynewCase[index].replace(/,/g, "")),
       ytotalCases: parseInt(ytotalCases[index].replace(/,/g, "")),
       ynewDeath: parseInt(ynewDeath[index].replace(/,/g, "")),
       ytotalDeaths: parseInt(ytotalDeaths[index].replace(/,/g, "")),
-      remainingCases: parseInt(remainingCases[index].replace(/,/g, "")),
+    });
+  });
+  mydata.map((elem, i) => {
+    const abc = ymydata.find(
+      ({ nationName }) => elem.nationName === nationName
+    );
+    return (mydata[i] = {
+      ...mydata[i],
+      ...abc,
     });
   });
   return mydata;
