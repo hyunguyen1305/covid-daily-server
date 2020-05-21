@@ -13,9 +13,11 @@ exports.getDataNews = (req, res, next) => {
       let $ = cheerio.load(res);
       const dataNews = extractDataNews($);
       const dataTable = extractDataTable($);
+      const updatedTime = $(".label-counter").next().text();
       const data = {
         dataNews,
         dataTable,
+        updatedTime,
       };
       return data;
     })
@@ -33,9 +35,19 @@ const extractDataTable = ($) => {
   const nation = data[1].slice(8, data[1].length - 8);
   const totalCases = data[2].slice(8, data[2].length - 8);
   const newCase = data[3].slice(8, data[3].length - 8);
-  const totalDeaths = data[4].slice(8, data[1].length - 8);
-  const newDeath = data[5].slice(8, data[1].length - 8);
-  const totalRecovered = data[5].slice(8, data[1].length - 8);
+  const totalDeaths = data[4].slice(8, data[4].length - 8);
+  const newDeath = data[5].slice(8, data[5].length - 8);
+  const totalRecovered = data[6].slice(8, data[6].length - 8);
+  const remainingCases = data[7].slice(8, data[7].length - 8);
+  const yData = $("#main_table_countries_yesterday").parsetable(
+    true,
+    true,
+    true
+  );
+  const ynewCase = yData[3].slice(8, yData[3].length - 8);
+  const ytotalCases = yData[2].slice(8, yData[2].length - 8);
+  const ynewDeath = yData[5].slice(8, yData[5].length - 8);
+  const ytotalDeaths = yData[4].slice(8, yData[4].length - 8);
   let mydata = [];
   nation.map((ele, index) => {
     let nationCode = null;
@@ -48,6 +60,11 @@ const extractDataTable = ($) => {
       totalDeaths: parseInt(totalDeaths[index].replace(/,/g, "")),
       newDeath: parseInt(newDeath[index].replace(/,/g, "")),
       totalRecovered: parseInt(totalRecovered[index].replace(/,/g, "")),
+      ynewCase: parseInt(ynewCase[index].replace(/,/g, "")),
+      ytotalCases: parseInt(ytotalCases[index].replace(/,/g, "")),
+      ynewDeath: parseInt(ynewDeath[index].replace(/,/g, "")),
+      ytotalDeaths: parseInt(ytotalDeaths[index].replace(/,/g, "")),
+      remainingCases: parseInt(remainingCases[index].replace(/,/g, "")),
     });
   });
   return mydata;
